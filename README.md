@@ -15,6 +15,9 @@ Hotel Booking uses the [Amadeus Hotel Search API](https://developers.amadeus.com
 * Edit or delete their hotel reviews.
 * Browse a list of their reservations.
 * Some more features ...
+*
+![image](https://user-images.githubusercontent.com/64772544/168010553-4e7363c1-a5c8-4fa7-ab52-b33388fc8fa0.png)
+
 
  
 ![image](https://user-images.githubusercontent.com/64772544/168009469-c2a0a519-07c6-4c3d-b966-3e1c765c51ef.png)
