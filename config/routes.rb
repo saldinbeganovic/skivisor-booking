@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :reservations, :only => [:index, :show]
   resources :reviews, :only => [:index, :show, :new, :create, :edit, :update, :destroy]
   resources :users, :only =>[:create, :show]
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   
   # Sessions controller routes
   root 'sessions#new'
