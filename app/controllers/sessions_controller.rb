@@ -10,6 +10,7 @@ class SessionsController < ApplicationController
     @user = User.find_by(email: params[:email])
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
+      session[:admin] = @user.admin
       redirect_to hotels_path
     else
       flash[:msg] = 'Invalid email and/or password'

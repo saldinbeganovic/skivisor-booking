@@ -1,7 +1,9 @@
+<div class="container">
+
 
  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
 
-  
+
   <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -18,14 +20,14 @@
             <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
             <div class="container">
               <div class="carousel-caption text-start">
-                <h1><%= hotel.name %></h1> 
+                <h1 style="color: #ffc800;"><%= hotel.name %></h1>
                 <p><%= hotel.city.name %></p>
                 <% if index == 0 %>
-                 <p><a class='btn btn-lg btn-primary' data-id="button-1">Reserve today</a></p>
+                 <p ><a class='btn btn-lg btn-primary' data-id="button-1" style="color: #212529 !important;background-color:#ffc800 !important; border: 0;">Reserve today</a></p>
                 <% elsif index == 1 %>
-                 <p><a class="btn btn-lg btn-primary" data-id="button-2">Learn more</a></p> 
+                 <p ><a class="btn btn-lg btn-primary" data-id="button-2" style="color: #212529 !important;background-color:#ffc800; border: 0;">Learn more</a></p>
                 <% elsif index == 2 %>
-                 <p><a class="btn btn-lg btn-primary" data-id="button-3">Browse gallery</a></p> 
+                 <p ><a class="btn btn-lg btn-primary" data-id="button-3" style="color: #212529 !important;background-color:#ffc800; border: 0;">Browse gallery</a></p>
                 <% end %>
               </div>
             </div>
@@ -56,13 +58,11 @@
     <% @hotels.each.with_index(1) do |hotel, index| %>
       <div class="row featurette" id="hotel-<%= index %>" >
         <div class="col-md-7">
-          <h2 class="featurette-heading"><%= hotel.name %></h2>
-          <span class="text-muted"><%= hotel.city.name %></span>
-          <p class="lead"><%= hotel.description %></p>
+          <h2 class="featurette-heading" style="color: #ffc800;"><%= hotel.name %></h2>
+          <span class="text-muted" style="color: white;"><%= hotel.city.name %></span>
+          <p class="lead" style="color: white;"><%= hotel.description %></p>
         </div>
-        <div class="col-md-5">
-          <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg>
-        </div>
+
       </div>
       <hr class="featurette-divider">
     <% end %>
@@ -70,13 +70,13 @@
   <!-- /END THE FEATURETTES -->
 
   </div><!-- /.container -->
-
+</div>
   <script>
 
     function activate() {
       const hotelButtons = document.getElementsByClassName('btn');
       for (const btn of hotelButtons) {
-        btn.addEventListener('click', function(e) { 
+        btn.addEventListener('click', function(e) {
           e.preventDefault();
           let string = e.target.dataset.id
           let number = string[string.length-1]
@@ -88,14 +88,3 @@
     activate()
 
   </script>
-
-
-  
-
-
-
-
-
-      
-  
-

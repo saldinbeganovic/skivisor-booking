@@ -1,18 +1,21 @@
+<div class="container" style="padding-top:50px;">
+
+
 <div class="view index">
 <%= render partial: 'messages/msg' %>
 
-  <h1>Cities Visited</h1>
+  <h1 style="color: #ffc800;">Cities Visited</h1>
 
   <% if @cities.blank? %>
-    <p>You haven't visited any cities yet<p>
+    <p style="color: #white;">You haven't visited any cities yet<p>
   <% else %>
-    <ul>
+    <ul style="color:white;">
       <% @user.cities.distinct.each do |city| %>
-        <li>
-         <h5><%= link_to city.name, city_hotels_path(city.id) %></h5>
+        <li style="color:white;">
+         <h5 style="color: white;"><%= city.name %></h5>
         </li><br>
       <% end %>
     </ul>
   <% end %>
 </div>
-    
+</div>

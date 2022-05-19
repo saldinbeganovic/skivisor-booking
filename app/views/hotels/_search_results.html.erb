@@ -1,8 +1,11 @@
-<div class="row">
-  <h3><%= link_to hotel.name, "hotel_search/#{hotel.hotelId}" %></h3>
-  <p>
+<div class="container" style="padding-top:50px;">
+<div class="row" >
+  <h3 style="color: #ffc800;"><%= link_to hotel.name, "hotel_search/#{hotel.hotelId}" %></h3>
+
+  <p style="color: #white;" >
     Guests: <%= hotel_guests(hotel, @user) %><br>
     Beds: <%= hotel_beds(hotel, @user) %><br>
     Price: <%= hotel_currency(hotel, @user) %> <%= hotel_price(hotel, @user) %>
   </p>
+</div>
 </div>

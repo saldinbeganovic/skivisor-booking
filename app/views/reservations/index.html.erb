@@ -1,36 +1,38 @@
 <%= render partial: 'messages/msg' %>
-
-<h1>My Reservations</h1><br>
+<div class="container" style="padding-top:50px">
+<h1 style="color: #ffc800;">My Reservations</h1><br>
 
 <% if @reservations.empty? %>
-  <h3>It seems you haven't booked any reservations yet :)</h3>
+  <h3 style="color: white;">It seems you haven't booked any reservations yet :)</h3>
 <% else %>
 
   <% if upcoming_reservations?(@user) %>
-    <p>Upcoming:</p>
-    <ul>
+    <p style="color: white;">Upcoming:</p>
+    <ul style="color: white;">
       <% @user.upcoming_reservations.each do |reservation| %>
-        <li>
-          <h3><%= link_to reservation.hotel.name, reservation_path(reservation) %></h3>
+        <li style="color: white;">
+          <h3 style="color: #ffc800;"><%= link_to reservation.hotel.name, reservation_path(reservation) %></h3>
           <%= reservation.hotel.city.name %>
           <%= render 'reservations/info', :reservation => reservation %>
         </li>
       <% end %>
     </ul>
   <% end %>
- 
+
   <% if previous_reservations?(@user) %>
-    <p>Previous:</p>
-    <ul>
+    <p style="color: white;">Previous:</p>
+    <ul style="color: white;">
       <% @user.previous_reservations.each do |reservation| %>
-        <li>
-          <h3><%= link_to reservation.hotel.name, reservation_path(reservation) %></h3>
+        <li style="color: white;">
+          <h3 style="color: #ffc800;"><%= link_to reservation.hotel.name, reservation_path(reservation) %></h3>
           <%= reservation.hotel.city.name %>
           <%= render 'reservations/info', :reservation => reservation %>
         </li>
       <% end %>
     </ul>
   <% end %>
+
+
 
 <% end %>
-
+</div>

@@ -23,8 +23,11 @@ gem 'jbuilder', '~> 2.7'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
-
+gem 'active_admin_theme'
+gem "groupdate"
+gem "chartkick"
+gem 'activeadmin'
+gem 'forest_liana'
 gem 'bcrypt'
 gem 'bootstrap'
 gem 'dotenv-rails'

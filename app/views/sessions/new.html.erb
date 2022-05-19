@@ -1,14 +1,27 @@
-<h1>Log In</h1>
-<%= render partial: 'messages/msg' %>
 
 
-<%= form_tag "/login", method: :post do %>
-  <%= label_tag :email, "Email" %>
-  <%= text_field_tag :email %>
-  <%= label_tag :password, "Password" %>
-  <%= password_field_tag :password %>
-  <%= submit_tag("Log In") %>
+<div class="container">
+  <%= render partial: 'messages/msg' %>
+<h2 style="color: white;">Log in</h2><br>
+
+ <%= form_tag "/login", method: :post do %>
+  <div class="field">
+    <p style="color:white"><%= label_tag :email %></p>
+    <%= email_field_tag :email %>
+  </div><br>
+
+  <div class="field">
+  <p style="color:white">  <%= label_tag :password %></p>
+    <%= password_field_tag :password %>
+  </div><br>
+
+  <div class="actions">
+    <%= submit_tag"Log in" %>
+  </div>
+  <br> <br>
 <% end %>
 
 <%= button_to "Log in with Google", "/auth/google_oauth2" %><br>
 <%= link_to "Create an account", "/signup" %>
+
+</div>

@@ -1,67 +1,165 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>RailsProject</title>
+    <title>Booking</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    
+
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    
+
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
 
   </head>
+<script type="text/javascript">
+  $(document).on('turbolinks:load', function() {
+  window.addEventListener('DOMContentLoaded', event => {
 
-  <body>
+      // Navbar shrink function
+      var navbarShrink = function () {
+          const navbarCollapsible = document.body.querySelector('#mainNav');
+          if (!navbarCollapsible) {
+              return;
+          }
+          if (window.scrollY === 0) {
+              navbarCollapsible.classList.remove('navbar-shrink')
+          } else {
+              navbarCollapsible.classList.add('navbar-shrink')
+          }
+
+      };
+
+      // Shrink the navbar
+      navbarShrink();
+
+      // Shrink the navbar when page is scrolled
+      document.addEventListener('scroll', navbarShrink);
+
+      // Activate Bootstrap scrollspy on the main nav element
+      const mainNav = document.body.querySelector('#mainNav');
+      if (mainNav) {
+          new bootstrap.ScrollSpy(document.body, {
+              target: '#mainNav',
+              offset: 74,
+          });
+      };
+
+      // Collapse responsive navbar when toggler is visible
+      const navbarToggler = document.body.querySelector('.navbar-toggler');
+      const responsiveNavItems = [].slice.call(
+          document.querySelectorAll('#navbarResponsive .nav-link')
+      );
+      responsiveNavItems.map(function (responsiveNavItem) {
+          responsiveNavItem.addEventListener('click', () => {
+              if (window.getComputedStyle(navbarToggler).display !== 'none') {
+                  navbarToggler.click();
+              }
+          });
+      });
+
+  });});
+</script>
+  <body id="page-top">
     <header>
       <% if session[:user_id] %>
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
-          <div class="container-fluid">
-            <a class="navbar-brand" href="/hotels">Hotel Booking</a>
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+          <div class="container-fluid justify-content-between">
+              <div class="d-flex">
+            <a class="navbar-brand" href="/" style="padding-left: 15px;"  >Hotel Booking</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            </div>
+
+              <ul class="navbar-nav flex-row d-none d-md-flex">
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="/hotel_search">Hotel Search</a>
+                  <a class="nav-link" aria-current="page" href="/" style="color: white !important;">Hotel Search</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="/users/<%= @user.id %>/hotels">Hotels</a>
+                  <a class="nav-link" aria-current="page" href="/reservations" style="color: white !important;"><span>Reservations</span>
+                  <span class="badge rounded-pill badge-notification bg-danger" style="color: white !important;"><%= @user.upcoming_reservations.length if @user.upcoming_reservations != [] %></span>
+                  </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="/reservations">Reservations (<%= @user.upcoming_reservations.length if @user.upcoming_reservations != [] %>)</a>
+                  <a class="nav-link" aria-current="page" href="/cities" style="color: white !important;">Cities</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="/cities">Cities</a>
+                  <a class="nav-link" aria-current="page" href="/reviews" style="color: white !important;">Reviews</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="/reviews">Reviews</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="/trending">Trending</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="/logout">Logout</a>
+                  <a class="nav-link" aria-current="page" href="/trending" style="color: white !important; ">Trending</a>
                 </li>
               </ul>
-            </div>
+
+            <ul class="navbar-nav flex-row">
+              <% if (session[:admin] == true) %>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/admin">Admin</a>
+              </li>
+              <% end %>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/logout">Logout</a>
+            </li>
+            </ul>
           </div>
         </nav>
+
       <% end %>
     </header>
 
     <main>
-      <div class="container">
-        <%= yield %>
-      <div>
+
+          <div class="container-fluid">
+              <%= yield %>
+          </div>
+
+
+          <section class="page-section <%= active_for(path: "/hotels") %>" id="services">
+              <div class="container">
+                  <div class="text-center">
+                      <h2 class="section-heading text-uppercase">Why to book with HOTEL-BOOKING.si?</h2>
+                      <br>
+                  </div>
+                  <div class="row text-center">
+                      <div class="col-md-4">
+                          <span class="fa-stack fa-4x">
+                              <i class="fas fa-circle fa-stack-2x " style="color: #ffc800"></i>
+                              <i class="fas fa-clock fa-stack-1x fa-inverse"></i>
+                          </span>
+                          <h4 class="my-3">Quick reservation</h4>
+
+                      </div>
+                      <div class="col-md-4">
+                          <span class="fa-stack fa-4x">
+                              <i class="fas fa-circle fa-stack-2x " style="color: #ffc800">></i>
+                              <i class="fas fa-ban fa-stack-1x fa-inverse"></i>
+                          </span>
+                          <h4 class="my-3">Free cancellation</h4>
+
+                      </div>
+                      <div class="col-md-4">
+                          <span class="fa-stack fa-4x">
+                              <i class="fas fa-circle fa-stack-2x " style="color: #ffc800"></i>
+                              <i class="fas fa-dollar fa-stack-1x fa-inverse"></i>
+                          </span>
+                          <h4 class="my-3">Best deals</h4>
+
+                      </div>
+                  </div>
+              </div>
+          </section>
+
     <main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
@@ -70,7 +168,14 @@
 
   <script>
   </script>
-  
+
   <%= javascript_pack_tag 'calendar', 'data-turbolinks-track': 'reload' %>
-  
+  <footer class="text-center text-lg-start fixed-bottom" style="background-color:#212529 ">
+    <!-- Copyright -->
+    <div class="text-center p-3" style="color: #272c30; border-top:solid;">
+      <span style="color: #5E6469;">© 2022 Copyright:</span>
+      <a class="text-center" style="color: #5E6469;"  href="#top_page">Saldin&Jan</a>
+    </div>
+    <!-- Copyright -->
+  </footer>
 </html>

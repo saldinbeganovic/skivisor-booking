@@ -26,17 +26,17 @@ class HotelsController < ApplicationController
   def show
     # If request comes from the 'city/hotel' nested route, check that the city and the hotel are valid (:check_city_id filter)
     # If request comes from 'hotel_path',show the hotel from the database by user id and hotel id
-    if params[:id]  
+    if params[:id]
       @hotel = current_user.find_hotel(params[:id])
       if @hotel.nil?
-        flash[:msg] = "Hotel not found." 
+        flash[:msg] = "Hotel not found."
         redirect_to user_hotels_path(current_user) and return
       end
     # If no nested city or no hotel from database, show the hotel using the hotelId from the API
     elsif params[:hotelId]
       @hotel = AmadeusApi.hotels.find { |hotel| hotel.hotelId == params[:hotelId] }
       if @hotel.nil?
-        flash[:msg] = "Hotel not found." 
+        flash[:msg] = "Hotel not found."
         redirect_to hotels_path
       end
     end
@@ -47,12 +47,12 @@ class HotelsController < ApplicationController
     @hotel = AmadeusApi.hotels.find { |hotel| hotel.hotelId == params[:hotelId] }
     # 'reservation', below, can cause an exception and it needs to be rescued
     begin
-      # Use the HOTEL_OFFER API ENDPOINT to check in real-time whether the reservation is still available 
-      reservation = api.amadeus.shopping.hotel_offer(params[:code]).get.data 
+      # Use the HOTEL_OFFER API ENDPOINT to check in real-time whether the reservation is still available
+      reservation = api.amadeus.shopping.hotel_offer(params[:code]).get.data
     rescue Amadeus::ResponseError => e
       flash[:msg] = "#{e.class}: #{e.message}. Please try again..."
       redirect_to root_path
-    else 
+    else
       # If no exception is raised, check whether reservertion is avaiable
       if reservation && reservation["available"]  == true
         # Check that the reservation attributes did not change since first time reservation was displayed
@@ -95,18 +95,18 @@ class HotelsController < ApplicationController
       if params[:city_id]
         @nested_city = current_user.cities.find_by(id: params[:city_id])
         @hotels = current_user.hotels_by_city(params[:city_id])
-        if @nested_city.nil? 
+        if @nested_city.nil?
           flash[:msg] = "City not found."
-          redirect_to cities_path and return    
+          redirect_to cities_path and return
         elsif params[:id] && current_user.hotels.find_by(id: params[:id], city_id: params[:city_id]).nil?
-          flash[:msg] = "Hotel not found for this city." 
+          flash[:msg] = "Hotel not found for this city."
           redirect_to city_hotels_path(@nested_city) and return
         end
       end
     end
 
     def check_user_id
-      if params[:user_id] 
+      if params[:user_id]
         @nested_user = User.find_by(id: params[:user_id])
         @hotels = current_user.all_hotels_sorted
         if current_user != @nested_user

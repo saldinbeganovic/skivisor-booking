@@ -1,6 +1,8 @@
 # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
 Rails.application.routes.draw do
+  ActiveAdmin.routes(self)
+  mount ForestLiana::Engine => '/forest'
   resources :cities, :only => [:index]
   resources :hotels, :only => [:index, :show]
   resources :reservations, :only => [:index, :show]

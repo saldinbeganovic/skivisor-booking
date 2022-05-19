@@ -1,16 +1,35 @@
+<div class="container">
+
+
 <h1>Sign Up</h1>
 <%= render partial: 'messages/error', locals: {agnostic: @user}  %>
 
 <%= form_for @user do |f| %>
-    <%= f.label :username %>
-    <%= f.text_field :username %><br><br>
-    <%= f.label :email %>
-    <%= f.text_field :email %><br><br>
-    <%= f.label :password %>
-    <%= f.password_field :password %><br><br>
-    <%= f.submit %>
+<div class="field">
+<p style="color:white">   <%= f.label :username %></p>
+  <%= f.text_field :username, autofocus: true %>
+</div><br />
+
+
+<div class="field">
+<p style="color:white">   <%= f.label :email %></p>
+  <%= f.email_field :email, autocomplete: "email" %>
+</div><br />
+
+<div class="field">
+<p style="color:white">   <%= f.label :password %></p>
+  <%= f.password_field :password, autocomplete: "new-password" %>
+</div><br />
+
+<div class="field">
+<p style="color:white">   <%= f.label :password_confirmation %></p>
+  <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+</div><br />
+
+<div class="actions">
+  <%= f.submit "Sign up" %>
+</div>
 <% end %>
 
 <p>Have an account? <%= link_to "Log In", "/login" %> instead</p>
-
-
+</div>
